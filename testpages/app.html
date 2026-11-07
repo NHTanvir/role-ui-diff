@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Role UI Diff — test app</title></head>
+<body>
+<h1 id="h">Workspace</h1>
+<p>Append <code>?role=admin</code> or <code>?role=member</code> to compare roles.</p>
+<nav id="nav"></nav>
+<form action="/workspaces/123/settings" method="post">
+  <input name="name"><div id="extra"></div>
+  <button>Save</button>
+</form>
+<div id="actions"></div>
+<script>
+  const role = new URLSearchParams(location.search).get('role') || 'member';
+  document.getElementById('h').textContent = 'Workspace (' + role + ')';
+  const nav = document.getElementById('nav');
+  const actions = document.getElementById('actions');
+  function link(href, text){ const a=document.createElement('a'); a.href=href; a.textContent=text; nav.appendChild(a); nav.appendChild(document.createTextNode(' ')); }
+  function btn(text){ const b=document.createElement('button'); b.textContent=text; actions.appendChild(b); actions.appendChild(document.createTextNode(' ')); }
+  link('/home','Home'); btn('View');
+  if (role === 'admin') {
+    link('/admin/users','Admin users'); link('/billing/refund','Refunds');
+    btn('Delete workspace'); btn('Invite member'); btn('Change role');
+    const f=document.querySelector('#extra'); const i=document.createElement('input'); i.name='role'; f.appendChild(i);
+  }
+</script>
+</body></html>

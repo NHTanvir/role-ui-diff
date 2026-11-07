@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Role UI Diff",
+  "version": "1.0.0",
+  "description": "Snapshots what each role can see/do on a page and diffs two roles to build a BFLA/multi-tenant test plan. Authorized testing only.",
+  "permissions": ["storage", "sidePanel", "scripting", "tabs", "downloads"],
+  "optional_host_permissions": ["*://*/*"],
+  "background": { "service_worker": "background.js" },
+  "side_panel": { "default_path": "panel.html" },
+  "action": { "default_title": "Role UI Diff (open side panel)" },
+  "options_page": "options.html",
+  "icons": { "128": "icon.png" }
+}
