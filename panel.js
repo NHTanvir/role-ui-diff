@@ -55,5 +55,24 @@ async function doDiff(){
 }
 document.getElementById('diff').addEventListener('click', doDiff);
 
+// --- Export / import JSON (record one role in each browser, then diff) ---
+document.getElementById('export').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify({ host, snaps }, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `role-ui-diff-${host || 'snaps'}.json`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+const fileEl = document.getElementById('file');
+document.getElementById('import').addEventListener('click', () => fileEl.click());
+fileEl.addEventListener('change', async () => {
+  const f = fileEl.files[0]; if (!f) return;
+  let data; try { data = JSON.parse(await f.text()); } catch { out.innerHTML = '<section>Invalid JSON.</section>'; return; }
+  const resp = await chrome.runtime.sendMessage({ type: 'rud-import', host, snaps: data.snaps || [] });
+  snaps = resp.snaps; fillRoleSelects();
+  out.innerHTML = `<section>Imported — ${snaps.length} snapshot(s) now stored.</section>`;
+  fileEl.value = '';
+});
+
 chrome.tabs.onActivated.addListener(loadSnaps);
 loadSnaps();
