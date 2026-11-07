@@ -28,3 +28,14 @@ test('markdown renders a checklist of only-in-A items', () => {
   assert.ok(md.includes('/admin'));
   assert.ok(md.includes('role'));
 });
+
+import { isPrivilegedField } from '../diff.js';
+test('privileged fields detected and class tags present', () => {
+  assert.ok(isPrivilegedField('role'));
+  assert.ok(isPrivilegedField('tenant_id'));
+  assert.ok(!isPrivilegedField('name'));
+  const d = diffSnapshots(admin, member);
+  assert.equal(d.actions.candidateClass, 'BFLA');
+  assert.equal(d.fields.candidateClass, 'BOPLA/mass-assignment');
+  assert.ok(d.fields.onlyInA.find((x) => x.name === 'role').privileged);
+});
