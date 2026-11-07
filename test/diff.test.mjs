@@ -19,3 +19,12 @@ test('links and fields diffed', () => {
   assert.deepEqual(d.links.onlyInA.map((x) => x.v), ['/admin']);
   assert.deepEqual(d.fields.onlyInA.map((x) => x.name), ['role']);
 });
+
+import { diffToMarkdown } from '../markdown.js';
+test('markdown renders a checklist of only-in-A items', () => {
+  const d = diffSnapshots(admin, member);
+  const md = diffToMarkdown(d);
+  assert.ok(md.includes('- [ ] Delete'));
+  assert.ok(md.includes('/admin'));
+  assert.ok(md.includes('role'));
+});

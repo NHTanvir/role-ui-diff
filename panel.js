@@ -74,5 +74,11 @@ fileEl.addEventListener('change', async () => {
   fileEl.value = '';
 });
 
+document.getElementById('copy').addEventListener('click', async () => {
+  if (!window.__lastDiff) { out.innerHTML = '<section>Run a diff first.</section>'; return; }
+  const { diffToMarkdown } = await import('./markdown.js');
+  navigator.clipboard.writeText(diffToMarkdown(window.__lastDiff)).catch(() => {});
+});
+
 chrome.tabs.onActivated.addListener(loadSnaps);
 loadSnaps();
