@@ -7,9 +7,10 @@ export function diffToMarkdown(d) {
     for (const i of items) L.push(`- [ ] ${fmt(i)}`);
     L.push('');
   };
-  sec(`Actions only ${d.roleA} has (try as ${d.roleB})`, d.actions.onlyInA,
+  sec(`Actions only ${d.roleA} has — ${d.actions.candidateClass} (try as ${d.roleB})`, d.actions.onlyInA,
       (x) => `${x.label}${x.href ? ` \`${x.href}\`` : ''}${x.score ? ` _(score ${x.score})_` : ''}`);
-  sec(`Links only ${d.roleA} has`, d.links.onlyInA, (x) => `\`${x.v}\``);
-  sec(`Form fields only ${d.roleA} has`, d.fields.onlyInA, (x) => `\`${x.form}\` · ${x.name}`);
+  sec(`Links only ${d.roleA} has — ${d.links.candidateClass}`, d.links.onlyInA, (x) => `\`${x.v}\``);
+  sec(`Form fields only ${d.roleA} has — ${d.fields.candidateClass}`, d.fields.onlyInA,
+      (x) => `\`${x.form}\` · ${x.name}${x.privileged ? ' ⚠️privileged' : ''}`);
   return L.join('\n');
 }

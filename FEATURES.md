@@ -9,6 +9,10 @@
 ## Diff
 - A-vs-B: actions / links / fields only in A, only in B, in both.
 - Only-in-role actions sorted by keyword interest (admin/delete/export/role/billing…).
+- Each category is **class-tagged** — actions → BFLA, links → BOLA/direct-URL,
+  form fields → BOPLA/mass-assignment — and privilege-bearing fields (`role`,
+  `is_admin`, `owner_id`, `tenant_id`, `plan`…) are flagged and sorted first.
+- Paths normalise to typed placeholders (`{uuid}`/`{hex}`/`{id}`/`{slug}`).
 
 ## Export / import
 - Export snapshots to JSON, import (merge by path+role) in another browser.

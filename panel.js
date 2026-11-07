@@ -47,10 +47,10 @@ async function doDiff(){
   window.__lastDiff = d;
   out.innerHTML = `<section><b>${esc(d.roleA)}</b> vs <b>${esc(d.roleB)}</b> on <code>${esc(d.path)}</code></section>
   <section>
-    ${group(`Actions only in ${esc(d.roleA)}`, 'only-a', d.actions.onlyInA, (x)=>`${esc(x.label)} <span class="score">${x.score}</span> ${x.href?('<code>'+esc(x.href)+'</code>'):''}`)}
-    ${group(`Actions only in ${esc(d.roleB)}`, 'only-b', d.actions.onlyInB, (x)=>`${esc(x.label)} <span class="score">${x.score}</span>`)}
-    ${group(`Links only in ${esc(d.roleA)}`, 'only-a', d.links.onlyInA, (x)=>`<code>${esc(x.v)}</code>`)}
-    ${group(`Fields only in ${esc(d.roleA)}`, 'only-a', d.fields.onlyInA, (x)=>`<code>${esc(x.form)}</code> · ${esc(x.name)}`)}
+    ${group(`Actions only in ${esc(d.roleA)} — ${esc(d.actions.candidateClass)}`, 'only-a', d.actions.onlyInA, (x)=>`${esc(x.label)} <span class="score">${x.score}</span> ${x.href?('<code>'+esc(x.href)+'</code>'):''}`)}
+    ${group(`Actions only in ${esc(d.roleB)} — ${esc(d.actions.candidateClass)}`, 'only-b', d.actions.onlyInB, (x)=>`${esc(x.label)} <span class="score">${x.score}</span>`)}
+    ${group(`Links only in ${esc(d.roleA)} — ${esc(d.links.candidateClass)}`, 'only-a', d.links.onlyInA, (x)=>`<code>${esc(x.v)}</code>`)}
+    ${group(`Fields only in ${esc(d.roleA)} — ${esc(d.fields.candidateClass)}`, 'only-a', d.fields.onlyInA, (x)=>`<code>${esc(x.form)}</code> · ${esc(x.name)}${x.privileged?' <span class="flag">privileged</span>':''}`)}
   </section>`;
 }
 document.getElementById('diff').addEventListener('click', doDiff);
